@@ -1,0 +1,239 @@
+DELETE
+DELETE is used to delete a record in a table.
+
+Be careful. You can delete all records of the table or just a few. Use the WHERE condition to specify which records you want to delete. The syntax is:
+
+DELETE FROM table_name
+WHERE condition;
+Here is an example deleting from the table Person the record with Id 3:
+
+DELETE FROM Person
+WHERE Id = 3;
+INNER JOIN
+JOIN, also called Inner Join, selects records that have matching values in two tables.
+
+SELECT * FROM A x JOIN B y ON y.aId = x.Id
+LEFT JOIN
+A LEFT JOIN returns all rows from the left table, and the matched rows from the right table. Rows in the left table will be returned even if there was no match in the right table. The rows from the left table with no match in the right table will have null for right table values.
+
+SELECT * FROM A x LEFT JOIN B y ON y.aId = x.Id
+RIGHT JOIN
+A RIGHT JOIN returns all rows from the right table, and the matched rows from the left table. Opposite of a left join, this will return all rows from the right table even where there is no match in the left table. Rows in the right table that have no match in the left table will have null values for left table columns.
+
+SELECT * FROM A x RIGHT JOIN B y ON y.aId = x.Id
+FULL OUTER JOIN
+A FULL OUTER JOIN returns all rows for which there is a match in either of the tables. So if there are rows in the left table that do not have matches in the right table, those will be included. Also, if there are rows in the right table that do not have matches in the left table, those will be included.
+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders
+ON Customers.CustomerID=Orders.CustomerID
+ORDER BY Customers.CustomerName
+INSERT
+INSERT is a way to insert data into a table.
+
+INSERT INTO table_name (column_1, column_2, column_3) 
+VALUES (value_1, 'value_2', value_3);
+LIKE
+LIKE  is used in a WHERE or HAVING (as part of the GROUP BY) to limit the selected rows to the items when a column has a certain pattern of characters contained in it.
+
+This SQL will select students that have FullName starting with “Monique” or ending with “Greene”.
+
+SELECT studentID, FullName, sat_score, rcd_updated
+FROM student 
+WHERE 
+    FullName LIKE 'Monique%' OR 
+    FullName LIKE '%Greene'; 
++-----------+---------------+-----------+---------------------+
+| studentID | FullName      | sat_score | rcd_updated         |
++-----------+---------------+-----------+---------------------+
+|         1 | Monique Davis |       400 | 2017-08-16 15:34:50 |
+|         5 | Alvin Greene  |      1200 | 2017-08-16 15:34:50 |
++-----------+---------------+-----------+---------------------+
+2 rows in set (0.00 sec)
+You can place NOT before LIKE to exclude the rows with the string pattern instead of selecting them. This SQL excludes records that contain “cer Pau” and “Ted” in the FullName column.
+
+SELECT studentID, FullName, sat_score, rcd_updated
+FROM student 
+WHERE FullName NOT LIKE '%cer Pau%' AND FullName NOT LIKE '%"Ted"%';
++-----------+----------------------+-----------+---------------------+
+| studentID | FullName             | sat_score | rcd_updated         |
++-----------+----------------------+-----------+---------------------+
+|         1 | Monique Davis        |       400 | 2017-08-16 15:34:50 |
+|         2 | Teri Gutierrez       |       800 | 2017-08-16 15:34:50 |
+|         4 | Louis Ramsey         |      1200 | 2017-08-16 15:34:50 |
+|         5 | Alvin Greene         |      1200 | 2017-08-16 15:34:50 |
+|         6 | Sophie Freeman       |      1200 | 2017-08-16 15:34:50 |
+|         8 | Donald D. Chamberlin |      2400 | 2017-08-16 15:35:33 |
+|         9 | Raymond F. Boyce     |      2400 | 2017-08-16 15:35:33 |
++-----------+----------------------+-----------+---------------------+
+7 rows in set (0.00 sec)
+
+1.   SQL Query for Retrieving Tables
+This query can be run to retrieve the list of tables present in a database where the database is “My_Schema”.
+
+With the SELECT command, users can define the columns that they want to get in the query output. This command is also useful to get which column users want to see as the output table. The SELECT statement is applied to pick data from a table. The data retrieved is put in a result table, named the result-set. The output data is saved in a result table. This output table is also termed as the result-set.
+
+1
+SELECT * FROM My_Schema.Tables;
+
+2.   Query for Selecting Columns from a Table
+This is perhaps the most widely used SQL queries examples. In the example below, we are extracting the “Student_ID” column or attribute from the table “STUDENT”. The select statement is used to select data from the database.
+
+1
+SELECT Student_ID FROM STUDENT;
+If you want to display all the attributes from a particular table, this is the right query to use:
+
+1
+SELECT * FROM STUDENT;
+
+3.   Query for Outputting Data Using a Constraint
+This SQL query retrieves the specified attributes from the table on the constraint Employee ID =0000
+
+1
+SELECT EMP_ID, NAME FROM EMPLOYEE_TBL WHERE EMP_ID = '0000';
+
+4. Query for Outputting Sorted Data Using ‘Order By’
+This query orders the results with respect to the attribute which is referenced to using “Order By” – so for example, if that attribute is an integer data type, then the result would either be sorted in ascending or descending order; likewise if the data type is a String then the result would be ordered in alphabetical order. The order by clause is used to sort the data from the table. The order by clause should always be used in the last of the SQL query.
+
+1
+2
+SELECT EMP_ID, LAST_NAME FROM EMPLOYEE
+WHERE CITY = 'Seattle' ORDER BY EMP_ID;
+The ordering of the result can also be set manually, using “asc ” for ascending and “desc” for descending.
+
+Ascending (ASC) is the default condition for the ORDER BY clause. In other words, if users don’t specify ASC or DESC after the column name, then the result will be ordered in ascending order only.
+
+1
+2
+SELECT EMP_ID, LAST_NAME FROM EMPLOYEE_TBL
+WHERE CITY = 'INDIANAPOLIS' ORDER BY EMP_ID asc;
+
+5.   SQL Query for Outputting Sorted Data Using ‘Group By’
+The ‘Group By’ property groups the resulting data according to the specified attribute.
+
+The SQL query below will select Name, Age columns from Patients table, then will filter them by Age value to include records where Age is more than 40 and then will group records with similar Age value and then finally will output them sorted by Name. The basic rule is that the group by clause should always follow a where clause in a Select statement and must precede the Order by clause.
+
+1
+2
+SELECT Name, Age FROM Patients WHERE Age > 40
+GROUP BY Name, Age ORDER BY Name;
+Another sample of use of Group By: this expression will select records with a price lesser than 70 from Orders table, will group records with a similar price, will sort the output by price and will also add the column COUNT(price) that will display how many records with similar price were found:
+
+1
+2
+SELECT COUNT(price), price FROM orders 
+WHERE price < 70 GROUP BY price ORDER BY price
+Note: you should use the very same set of columns for both SELECT and GROUP BY commands, otherwise you will get an error. Many thanks to Sachidannad for pointing out!
+
+SQL Queries for Data Manipulation Using Math Functions
+There are a lot of built-in math functions like COUNT and AVG which provide basic functionalities of counting the number of results and averaging them respectively.
+
+6. Data Manipulation Using COUNT
+This query displays the total number of customers by counting each customer ID. In addition, it groups the results according to the country of each customer. In count, if users define DISTINCT, then they cal also define the query_partition_clause. This clause is a part of the analytic clause, and  the other clauses such as order_by_clause and windowing_clause are not permitted.
+
+Syntax: SELECT COUNT(colname) FROM table name;
+
+1
+SELECT COUNT(CustomerID), Country FROM Customers GROUP BY Country;
+
+7. Data Manipulation Using SUM
+SUM calculates the total of the attribute that is given to it as an argument. SUM is an aggregate function and it calculates the sum of all the distinct values. and sum of all the duplicate values.
+
+1
+SELECT SUM(Salary)FROM Employee WHERE Emp_Age < 30;
+
+8. Data Manipulation Using AVG
+Simple – an average of a given attribute. Average is also an aggregate function in SQL. The AVG() function computes the average of non-NULL values in a column. It ignores the null values.
+
+1
+SELECT AVG(Price)FROM Products;
+
+9.   SQL Query for Listing all Views
+This SQL query lists all the views available in the schema.
+
+1
+SELECT * FROM My_Schema.views;
+
+10. Query for Creating a View
+A view is a tailored table that is formed as a result of a query. It has tables and rows just like any other table. It’s usually a good idea to run queries in SQL as independent views because this allows them to be retrieved later to view the query results, rather than computing the same command every time for a particular set of results.
+
+1
+2
+3
+4
+CREATE VIEW Failing_Students AS
+SELECT S_NAME, Student_ID
+FROM STUDENT
+WHERE GPA > 40;
+
+11. Query for Retrieving a View
+The standard syntax of selecting attributes from a table is applicable to views as well.
+
+1
+SELECT * FROM Failing_Students;
+
+12. Query for Updating a View
+This query updates the view named ‘Product List’ – and if this view doesn’t exist, then the Product List view gets created as specified in this query. The view is also called as a virtual table. In other words, view is just a mirrored copy of a table whose data is the result of a stored query.
+
+A view is a legitimate copy of a different table or sequence of tables. A view obtains its information or data from the tables from previously created tables known as base tables. Base tables are real tables. All procedures implemented on a view really modify the base table. Users can use views just like the real or base tables. In view, users can apply various DDL, DML commands such as update, insert into, and delete.
+
+1
+2
+3
+4
+CREATE OR REPLACE VIEW [ Product List] AS
+SELECT ProductID, ProductName, Category
+FROM Products
+WHERE Discontinued = No;
+
+13. Query for Dropping a View
+This query will drop or delete a view named ‘V1’. The important thing to remember here is that the DROP VIEW is disallowed if there are any views dependent on the view you are about to drop.
+
+1
+DROP VIEW V1;
+
+14. Query to Display User Tables
+A user-defined table is a representation of defined information in a table, and they can be used as arguments for procedures or user-defined functions. Because they’re so useful, it’s useful to keep track of them using the following query. User tables explains the relational tables of the current user.
+
+1
+SELECT * FROM Sys.objects WHERE Type='u'
+
+15. Query to Display Primary Keys
+A primary key uniquely identifies all values within a table. A primary key imposes a NOT NULL restriction and a unique constraint in one declaration. In other words, it prevents various rows from having similar values or sequences of columns. It doesn’t allow null values. The primar key can be defined on a single column or the combination of two columns in a table. It is responsible for all the relationships between the tables.
+
+The following SQL query lists all the fields in a table’s primary key.
+
+1
+SELECT * from Sys.Objects WHERE Type='PK'
+
+16. Query for Displaying Unique Keys
+A Unique Key allows a column to ensure that all of its values are different. Unique key also recognizes a different tuple uniquely in relation to or table. A table can have more than one unique key. Unique key constraints can take only one NULL value for the column.
+
+1
+SELECT * FROM Sys.Objects WHERE Type='uq'
+
+17. Displaying Foreign Keys
+Foreign keys link one table to another – they are attributes in one table which refer to the primary key of another table.
+
+1
+SELECT * FROM Sys.Objects WHERE Type='f'
+Primary, Unique, and Foreign are part of the constraints in SQL. Constraints are essential to the scalability, compliance, and sincerity of the data. Constraints implement particular rules, assuring the data adheres to the conditions outlined. For example, these are the laws imposed on the columns of the database tables. These are applied to restrict the kind of data in the table. This assures the efficiency and authenticity of the database.
+
+18. Displaying Triggers
+A Trigger is sort of an ‘event listener’ – i.e, it’s a pre-specified set of instructions that execute when a certain event occurs. The list of defined triggers can be viewed using the following query.
+
+1
+SELECT * FROM Sys.Objects WHERE Type='tr'
+
+19. Displaying Internal Tables
+Internal tables are formed as a by-product of a user-action and are usually not accessible. The data in internal tables cannot be manipulated; however, the metadata of the internal tables can be viewed using the following query.
+
+1
+SELECT * FROM Sys.Objects WHERE Type='it'
+
+20. Displaying a List of Procedures
+A stored procedure is a group of advanced SQL queries that logically form a single unit and perform a particular task. Thus, using the following query you can keep track of them:
+
+1
+SELECT * FROM Sys.Objects WHERE Type='p'
